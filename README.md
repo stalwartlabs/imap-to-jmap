@@ -1,4 +1,4 @@
-# Stalwart IMAP Server
+# IMAP to JMAP Proxy Server
 
 [![Test](https://github.com/stalwartlabs/imap-to-jmap/actions/workflows/test.yml/badge.svg)](https://github.com/stalwartlabs/imap-to-jmap/actions/workflows/test.yml)
 [![Build](https://github.com/stalwartlabs/imap-to-jmap/actions/workflows/build.yml/badge.svg)](https://github.com/stalwartlabs/imap-to-jmap/actions/workflows/build.yml)
