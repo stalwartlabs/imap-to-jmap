@@ -1,6 +1,6 @@
 [package]
-name = "stalwart-imap"
-description = "Stalwart IMAP Server"
+name = "stalwart-imap-proxy"
+description = "Stalwart IMAP to JMAP proxy serve"
 authors = [ "Stalwart Labs Ltd. <hello@stalw.art>"]
 repository = "https://github.com/stalwartlabs/imap-server"
 homepage = "https://stalw.art/imap"

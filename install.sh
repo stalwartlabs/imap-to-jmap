@@ -6,15 +6,15 @@
 set -e
 set -u
 
-readonly BASE_PATH="/usr/local/stalwart-imap"
+readonly BASE_PATH="/usr/local/stalwart-imap-proxy"
 readonly BIN_PATH="${BASE_PATH}/bin"
 readonly DB_PATH="${BASE_PATH}/data"
 readonly CFG_PATH="${BASE_PATH}/etc"
 
-readonly BASE_URL="https://github.com/stalwartlabs/imap-server/releases/latest/download"
-readonly CONFIG_URL="https://raw.githubusercontent.com/stalwartlabs/imap-server/main/resources/config/config.yml"
-readonly SYSTEMD_SVC_URL="https://raw.githubusercontent.com/stalwartlabs/imap-server/main/resources/systemd/stalwart-imap.service"
-readonly LAUNCHCTL_SVC_URL="https://raw.githubusercontent.com/stalwartlabs/imap-server/main/resources/systemd/stalwart.imap.plist"
+readonly BASE_URL="https://github.com/stalwartlabs/imap-proxy-server/releases/latest/download"
+readonly CONFIG_URL="https://raw.githubusercontent.com/stalwartlabs/imap-proxy-server/main/resources/config/config.yml"
+readonly SYSTEMD_SVC_URL="https://raw.githubusercontent.com/stalwartlabs/imap-proxy-server/main/resources/systemd/stalwart-imap-proxy.service"
+readonly LAUNCHCTL_SVC_URL="https://raw.githubusercontent.com/stalwartlabs/imap-proxy-server/main/resources/systemd/stalwart.imap-proxy.plist"
 
 main() {
     downloader --check
@@ -34,12 +34,12 @@ main() {
     # Detect OS
     local _os="unknown"
     local _uname="$(uname)"
-    local _account="stalwart-imap"
+    local _account="stalwart-imap-proxy"
     if [ "${_uname}" = "Linux" ]; then
         _os="linux"
     elif [ "${_uname}" = "Darwin" ]; then
         _os="macos"
-        _account="_stalwart-imap"
+        _account="_stalwart-imap-proxy"
     fi
 
     # Detect platform architecture
@@ -51,8 +51,8 @@ main() {
     say "⏳ Downloading Stalwart IMAP for ${_arch}..."
     local _dir
     _dir="$(ensure mktemp -d)"
-    local _file="${_dir}/stalwart-imap.tar.gz"
-    local _url="${BASE_URL}/stalwart-imap-${_arch}.tar.gz"
+    local _file="${_dir}/stalwart-imap-proxy.tar.gz"
+    local _url="${BASE_URL}/stalwart-imap-proxy-${_arch}.tar.gz"
     ensure mkdir -p "$_dir"
     ensure downloader "$_url" "$_file" "$_arch"
 
@@ -69,14 +69,14 @@ main() {
 
     # Download systemd/launchctl service
     if [ -d /etc/systemd/system ]; then
-        if [ ! -f /etc/systemd/system/stalwart-imap.service ]; then
+        if [ ! -f /etc/systemd/system/stalwart-imap-proxy.service ]; then
             say "⬇️  Creating systemd service..."
-            ensure downloader "${SYSTEMD_SVC_URL}" /etc/systemd/system/stalwart-imap.service "systemd-service"
+            ensure downloader "${SYSTEMD_SVC_URL}" /etc/systemd/system/stalwart-imap-proxy.service "systemd-service"
         fi
     elif [ -d /Library/LaunchDaemons ]; then
-        if [ ! -f /Library/LaunchDaemons/stalwart.imap.plist ]; then
+        if [ ! -f /Library/LaunchDaemons/stalwart.imap-proxy.plist ]; then
             say "⬇️  Creating launchctl service..."
-            ensure downloader "${LAUNCHCTL_SVC_URL}" /Library/LaunchDaemons/stalwart.imap.plist "launchctl-service"
+            ensure downloader "${LAUNCHCTL_SVC_URL}" /Library/LaunchDaemons/stalwart.imap-proxy.plist "launchctl-service"
         fi
     fi
 
@@ -89,23 +89,23 @@ main() {
             local _uid="$((_last_uid+1))"
             local _gid="$((_last_gid+1))"
 
-            ensure dscl /Local/Default -create Groups/_stalwart-imap
-            ensure dscl /Local/Default -create Groups/_stalwart-imap Password \*
-            ensure dscl /Local/Default -create Groups/_stalwart-imap PrimaryGroupID $_gid
-            ensure dscl /Local/Default -create Groups/_stalwart-imap RealName "Stalwart IMAP service"
-            ensure dscl /Local/Default -create Groups/_stalwart-imap RecordName _stalwart-imap stalwart-imap
+            ensure dscl /Local/Default -create Groups/_stalwart-imap-proxy
+            ensure dscl /Local/Default -create Groups/_stalwart-imap-proxy Password \*
+            ensure dscl /Local/Default -create Groups/_stalwart-imap-proxy PrimaryGroupID $_gid
+            ensure dscl /Local/Default -create Groups/_stalwart-imap-proxy RealName "Stalwart IMAP service"
+            ensure dscl /Local/Default -create Groups/_stalwart-imap-proxy RecordName _stalwart-imap-proxy stalwart-imap-proxy
 
-            ensure dscl /Local/Default -create Users/_stalwart-imap
-            ensure dscl /Local/Default -create Users/_stalwart-imap NFSHomeDirectory /Users/_stalwart-imap
-            ensure dscl /Local/Default -create Users/_stalwart-imap Password \*
-            ensure dscl /Local/Default -create Users/_stalwart-imap PrimaryGroupID $_gid
-            ensure dscl /Local/Default -create Users/_stalwart-imap RealName "Stalwart IMAP service"
-            ensure dscl /Local/Default -create Users/_stalwart-imap RecordName _stalwart-imap stalwart-imap
-            ensure dscl /Local/Default -create Users/_stalwart-imap UniqueID $_uid
-            ensure dscl /Local/Default -create Users/_stalwart-imap UserShell /bin/bash
+            ensure dscl /Local/Default -create Users/_stalwart-imap-proxy
+            ensure dscl /Local/Default -create Users/_stalwart-imap-proxy NFSHomeDirectory /Users/_stalwart-imap-proxy
+            ensure dscl /Local/Default -create Users/_stalwart-imap-proxy Password \*
+            ensure dscl /Local/Default -create Users/_stalwart-imap-proxy PrimaryGroupID $_gid
+            ensure dscl /Local/Default -create Users/_stalwart-imap-proxy RealName "Stalwart IMAP service"
+            ensure dscl /Local/Default -create Users/_stalwart-imap-proxy RecordName _stalwart-imap-proxy stalwart-imap-proxy
+            ensure dscl /Local/Default -create Users/_stalwart-imap-proxy UniqueID $_uid
+            ensure dscl /Local/Default -create Users/_stalwart-imap-proxy UserShell /bin/bash
 
-            ensure dscl /Local/Default -delete /Users/_stalwart-imap AuthenticationAuthority
-            ensure dscl /Local/Default -delete /Users/_stalwart-imap PasswordPolicyOptions
+            ensure dscl /Local/Default -delete /Users/_stalwart-imap-proxy AuthenticationAuthority
+            ensure dscl /Local/Default -delete /Users/_stalwart-imap-proxy PasswordPolicyOptions
         else
             ensure useradd ${_account} -s /sbin/nologin -M
         fi
@@ -113,27 +113,27 @@ main() {
 
     # Create self-signed certificates
     say "🔑  Creating self-signed certificates..."
-    if [ ! -f ${CFG_PATH}/imap.crt ]; then
-        ignore openssl req -x509 -nodes -days 1825 -newkey rsa:4096 -subj '/CN=localhost' -keyout ${CFG_PATH}/imap.key -out ${CFG_PATH}/imap.crt
+    if [ ! -f ${CFG_PATH}/imap-proxy.crt ]; then
+        ignore openssl req -x509 -nodes -days 1825 -newkey rsa:4096 -subj '/CN=localhost' -keyout ${CFG_PATH}/imap-proxy.key -out ${CFG_PATH}/imap-proxy.crt
     fi
 
     # Copy binary
     say "⬇️  Installing Stalwart IMAP at ${BASE_PATH}..."
     ensure tar zxvf "$_file" -C "$_dir"
-    ensure mv "$_dir/stalwart-imap" "${BIN_PATH}/stalwart-imap"
+    ensure mv "$_dir/stalwart-imap-proxy" "${BIN_PATH}/stalwart-imap-proxy"
     ensure chown -R ${_account}:${_account} ${BASE_PATH}
     ensure chmod -R 770 ${BASE_PATH}   
 
     # Install systemd service
     if [ -d /etc/systemd/system ]; then
         say "💡  Starting Stalwart IMAP systemd service..."
-        ignore /bin/systemctl enable stalwart-imap
-        ignore /bin/systemctl restart stalwart-imap
+        ignore /bin/systemctl enable stalwart-imap-proxy
+        ignore /bin/systemctl restart stalwart-imap-proxy
     elif [ -d /Library/LaunchDaemons ]; then
         say "💡  Starting Stalwart IMAP launchctl service..."
-        ignore launchctl load /Library/LaunchDaemons/stalwart.imap.plist
-        ignore launchctl enable system/stalwart.imap
-        ignore launchctl start system/stalwart.imap
+        ignore launchctl load /Library/LaunchDaemons/stalwart.imap-proxy.plist
+        ignore launchctl enable system/stalwart.imap-proxy
+        ignore launchctl start system/stalwart.imap-proxy
     fi
 
     say "🎉 Installed Stalwart IMAP! To complete the installation edit"
@@ -418,7 +418,7 @@ get_endianness() {
 }
 
 say() {
-    printf 'stalwart-imap: %s\n' "$1"
+    printf 'stalwart-imap-proxy: %s\n' "$1"
 }
 
 err() {

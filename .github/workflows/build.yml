@@ -4,10 +4,8 @@ on:
   workflow_dispatch:
   pull_request:
   push:
-    branches:
-      - main
     tags:
-      - v*.*.*
+      - 'v*.*.*'
 
 jobs:
   build:
@@ -94,7 +92,7 @@ jobs:
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
         with:
-          key: ${{ matrix.host_os }}-${{ matrix.target }}-imap          
+          key: ${{ matrix.host_os }}-${{ matrix.target }}-imap-proxy          
 
       - name: XCode Version
         if: ${{ matrix.target == 'aarch64-apple-darwin' }}
@@ -165,7 +163,7 @@ jobs:
         shell: bash
         run: |
           cd target/${{ matrix.target }}/release          
-          tar czvf ../../../stalwart-imap-${{ matrix.target }}.tar.gz stalwart-imap
+          tar czvf ../../../stalwart-imap-proxy-${{ matrix.target }}.tar.gz stalwart-imap-proxy
           cd -
           
       - name: Package (7z)
@@ -173,14 +171,14 @@ jobs:
         shell: bash
         run: |
           cd target/${{ matrix.target }}/release          
-          7z a ../../../stalwart-imap-${{ matrix.target }}.zip stalwart-imap.exe
+          7z a ../../../stalwart-imap-proxy-${{ matrix.target }}.zip stalwart-imap-proxy.exe
           cd -
           
       - name: Publish Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         with:
-            files: 'stalwart-imap*'
+            files: 'stalwart-imap-proxy*'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -211,9 +209,9 @@ jobs:
           context: .
           push: true
           platforms: linux/amd64
-          tags: stalwartlabs/imap-server:latest
-          cache-from: type=registry,ref=stalwartlabs/imap-server:buildcache
-          cache-to: type=registry,ref=stalwartlabs/imap-server:buildcache,mode=max
+          tags: stalwartlabs/imap-proxy-server:latest
+          cache-from: type=registry,ref=stalwartlabs/imap-proxy-server:buildcache
+          cache-to: type=registry,ref=stalwartlabs/imap-proxy-server:buildcache,mode=max
           #cache-from: type=gha
           #cache-to: type=gha,mode=max
 
@@ -244,8 +242,8 @@ jobs:
           context: .
           push: true
           platforms: linux/arm64
-          tags: stalwartlabs/imap-server:latest
-          cache-from: type=registry,ref=stalwartlabs/imap-server:buildcache
-          cache-to: type=registry,ref=stalwartlabs/imap-server:buildcache,mode=max
+          tags: stalwartlabs/imap-proxy-server:latest
+          cache-from: type=registry,ref=stalwartlabs/imap-proxy-server:buildcache
+          cache-to: type=registry,ref=stalwartlabs/imap-proxy-server:buildcache,mode=max
           #cache-from: type=gha
           #cache-to: type=gha,mode=max

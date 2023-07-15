@@ -21,8 +21,8 @@
  * for more details.
 */
 
-use stalwart_imap::core::env_settings::EnvSettings;
-use stalwart_imap::start_imap_server;
+use stalwart_imap_proxy::core::env_settings::EnvSettings;
+use stalwart_imap_proxy::start_imap_server;
 
 #[tokio::main]
 async fn main() -> std::io::Result<()> {

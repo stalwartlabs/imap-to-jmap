@@ -1,7 +1,7 @@
 # Stalwart IMAP Server
 
-[![Test](https://github.com/stalwartlabs/imap-server/actions/workflows/test.yml/badge.svg)](https://github.com/stalwartlabs/imap-server/actions/workflows/test.yml)
-[![Build](https://github.com/stalwartlabs/imap-server/actions/workflows/build.yml/badge.svg)](https://github.com/stalwartlabs/imap-server/actions/workflows/build.yml)
+[![Test](https://github.com/stalwartlabs/imap-to-jmap/actions/workflows/test.yml/badge.svg)](https://github.com/stalwartlabs/imap-to-jmap/actions/workflows/test.yml)
+[![Build](https://github.com/stalwartlabs/imap-to-jmap/actions/workflows/build.yml/badge.svg)](https://github.com/stalwartlabs/imap-to-jmap/actions/workflows/build.yml)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![](https://img.shields.io/discord/923615863037390889?label=Chat)](https://discord.gg/jVAuShSdNZ)
 [![](https://img.shields.io/twitter/follow/stalwartlabs?style=flat)](https://twitter.com/stalwartlabs)
@@ -31,56 +31,13 @@ Key features:
   - Rate limiting.
   - Memory safe (thanks to Rust).
 
-## Get Started
-
-Install Stalwart IMAP on your server by following the instructions for your platform:
-
-- [Linux / MacOS](https://stalw.art/imap/get-started/linux/)
-- [Windows](https://stalw.art/imap/get-started/windows/)
-- [Docker](https://stalw.art/imap/get-started/docker/)
-
-You may also [compile Stalwart IMAP from the source](https://stalw.art/imap/development/compile/).
-
 ## Support
 
 If you are having problems running Stalwart IMAP, you found a bug or just have a question,
-do not hesitate to reach us on [Github Discussions](https://github.com/stalwartlabs/imap-server/discussions),
+do not hesitate to reach us on [Github Discussions](https://github.com/stalwartlabs/imap-to-jmap/discussions),
 [Reddit](https://www.reddit.com/r/stalwartlabs) or [Discord](https://discord.gg/jVAuShSdNZ).
 Additionally you may become a sponsor to obtain priority support from Stalwart Labs Ltd.
 
-## Documentation
-
-Table of Contents
-
-- Get Started
-  - [Linux / MacOS](https://stalw.art/imap/get-started/linux/)
-  - [Windows](https://stalw.art/imap/get-started/windows/)
-  - [Docker](https://stalw.art/imap/get-started/docker/)
-- Configuration
-  - [Overview](https://stalw.art/imap/configure/overview/)
-  - [IMAP Server](https://stalw.art/imap/configure/imap/)
-  - [JMAP Proxy](https://stalw.art/imap/configure/proxy/)
-  - [ManageSieve](https://stalw.art/imap/configure/sieve/)
-  - [Cache](https://stalw.art/imap/configure/cache/)
-- Development
-  - [Compiling](https://stalw.art/imap/development/compile/)
-  - [Tests](https://stalw.art/imap/development/test/)
-  - [RFCs conformed](https://stalw.art/imap/development/rfc/)
-
-
-## Roadmap
-
-Support for the following IMAP extensions is planned for Stalwart IMAP:
-
-- [RFC 2087 - IMAP4 QUOTA extension](https://datatracker.ietf.org/doc/html/rfc2087)
-- [RFC 2192 - IMAP URL Scheme](https://datatracker.ietf.org/doc/html/rfc2192)
-- [RFC 4467 - URLAUTH Extension](https://datatracker.ietf.org/doc/html/rfc4467)
-- [RFC 4469 - IMAP CATENATE Extension](https://datatracker.ietf.org/doc/html/rfc4469)
-- [RFC 4978 - IMAP COMPRESS Extension](https://datatracker.ietf.org/doc/html/rfc4978)
-- [RFC 5255 - IMAP Internationalization](https://datatracker.ietf.org/doc/html/rfc5255)
-- [RFC 5465 - IMAP NOTIFY Extension](https://datatracker.ietf.org/doc/html/rfc5465)
-- [RFC 5524 - Extended URLFETCH for Binary and Converted Parts](https://datatracker.ietf.org/doc/html/rfc5524)
-- [RFC 6237 - IMAP4 Multimailbox SEARCH Extension](https://www.rfc-editor.org/rfc/rfc6237)
 
 ## Testing
 
