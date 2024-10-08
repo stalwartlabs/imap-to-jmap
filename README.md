@@ -1,4 +1,14 @@
-# IMAP to JMAP Proxy Server
+# ⚠️ Repository Archived ⚠️
+
+**This repository has been archived and is no longer maintained.**
+
+Development for this IMAP-to-JMAP proxy has been moved to the [Stalwart Mail Server repository](https://github.com/stalwartlabs/mail-server), where ongoing updates and improvements will take place.
+
+Thank you for your interest and contributions!
+
+--- 
+
+## IMAP to JMAP Proxy Server
 
 [![Test](https://github.com/stalwartlabs/imap-to-jmap/actions/workflows/test.yml/badge.svg)](https://github.com/stalwartlabs/imap-to-jmap/actions/workflows/test.yml)
 [![Build](https://github.com/stalwartlabs/imap-to-jmap/actions/workflows/build.yml/badge.svg)](https://github.com/stalwartlabs/imap-to-jmap/actions/workflows/build.yml)
